@@ -3,6 +3,7 @@
     width:70%;
     height: 400px;
     border:1px solid black;
+    overflow-y: scroll;
   }
 </style>
 
@@ -28,8 +29,15 @@
 
   socket.on('backend:logs_updated', (data)=>
   {
-    console.log(data.data)
-    $('.log-container').empty().text(data.data);
+    const logContainer = $('.log-container')
+    logContainer.empty();
+    for(let singleLine of data.data.split('\n'))
+    {
+      let singleLineContainer = $('<p></p>');
+      singleLineContainer.addClass(('my-1'))
+      singleLineContainer.text(singleLine)
+      singleLineContainer.appendTo(logContainer);
+    }
   });
 
   
